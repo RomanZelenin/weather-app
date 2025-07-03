@@ -70,7 +70,7 @@ function App() {
       <Header />
       <Stack filter={isShowLoading ? 'blur(2px)' : 'none'} p={'16px'} flex={1}>
         <HStack justify={'center'}>
-          <Search onClickSearch={(query) => fetchWeekForecastQuery({ appid: APP_KEY, city: query })} />
+          <Search isError={isErrorQuery} onClickSearch={(query) => fetchWeekForecastQuery({ appid: APP_KEY, city: query })} />
         </HStack>
         {!isShowLoading && weather.length === 0 && weatherSavedCities.length === 0 &&
           <Center flex={1}>
