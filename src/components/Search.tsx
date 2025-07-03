@@ -1,5 +1,5 @@
 import { CloseIcon } from '@chakra-ui/icons';
-import { Button, Input, InputGroup, InputRightElement, useToast, type ToastId } from '@chakra-ui/react';
+import { Button, Input, InputGroup, InputRightElement, useColorMode, useToast, type ToastId } from '@chakra-ui/react';
 import { useEffect, useRef, useState } from 'react';
 
 
@@ -11,6 +11,7 @@ export const Search = ({ onClickSearch, isError }: { onClickSearch: (query: stri
   const toastIdRef = useRef<ToastId>(null)
   const [localError, setIsLocalError] = useState(isError);
   const toast = useToast();
+  const { colorMode } = useColorMode();
 
   useEffect(() => setIsLocalError(isError), [isError])
   useEffect(() => setIsLocalError(false), [query])
@@ -35,10 +36,10 @@ export const Search = ({ onClickSearch, isError }: { onClickSearch: (query: stri
     <InputGroup maxW={'400px'}>
       <Input
         ref={refSearchInput}
-        borderColor={localError ? 'red' : 'whiteAlpha.500'}
+        borderColor={localError ? 'red' : colorMode==='dark' ? 'whiteAlpha.500' : 'blackAlpha.500'}
         _focus={{
           boxShadow: '2px 4px 8px gray',
-          borderColor:localError ? 'red' : 'blackAlpha.500'
+          borderColor: localError ? 'red' : 'blackAlpha.500'
         }}
         _hover={{ borderColor: localError ? 'red' : 'blackAlpha.500' }}
         onKeyDown={handleOnKeyDownInputSearch}
