@@ -1,5 +1,5 @@
 import { AddIcon, DeleteIcon } from '@chakra-ui/icons';
-import { Stack, Text, Flex, Tooltip, IconButton } from '@chakra-ui/react';
+import { Stack, Text, Flex, Tooltip, IconButton, HStack } from '@chakra-ui/react';
 import { useMemo } from 'react';
 import { WeatherDayCard } from './WeatherDayCard';
 import type { Weather } from '../App';
@@ -17,41 +17,51 @@ export const WeeklyListWeather = ({ e, onClickDelete, isSave }: { e: { city: str
     }
     return week;
   }, []);
-  return (<>
-    <Stack>
-      <Text fontSize={'24px'} alignSelf={'center'}>{e.city}</Text>
-      <Flex justify={'center'} columnGap={'8px'}>
-        {e.weather.map((w, idx) => (
-          <WeatherDayCard key={idx} weather={w} date={week[idx]} />))}
-        <Tooltip label={isSave ? 'Сохранить' : 'Удалить'}>
-          <IconButton
-            variant={'ghost'}
-            icon={isSave ? <AddIcon /> : <DeleteIcon />}
-            aria-label={isSave ? 'add city' : 'delete city'}
-            onClick={() => {
-              const cities = localStorage.getItem('cities');
-              if (isSave) {
-                if (cities === null) {
-                  localStorage.setItem('cities', e.city);
-                } else {
-                  if (!cities.split(',').includes(e.city)) {
-                    localStorage.setItem('cities', cities + ',' + e.city);
-                  }
-                }
-              } else {
-                if (cities) {
-                  const filteredCitites = cities!.split(',').filter(city => city !== e.city);
-                  if (filteredCitites.length > 0) {
-                    localStorage.setItem('cities', filteredCitites.join(','));
+  return (
+    <>
+      <Stack>
+        <HStack justify={'center'}>
+          <Text fontSize={"24px"} alignSelf={"center"}>
+            {e.city}
+          </Text>
+          <Tooltip label={isSave ? "Сохранить" : "Удалить"}>
+            <IconButton
+              variant={"ghost"}
+              icon={isSave ? <AddIcon /> : <DeleteIcon />}
+              aria-label={isSave ? "add city" : "delete city"}
+              onClick={() => {
+                const cities = localStorage.getItem("cities");
+                if (isSave) {
+                  if (cities === null) {
+                    localStorage.setItem("cities", e.city);
                   } else {
-                    localStorage.removeItem('cities');
+                    if (!cities.split(",").includes(e.city)) {
+                      localStorage.setItem("cities", cities + "," + e.city);
+                    }
+                  }
+                } else {
+                  if (cities) {
+                    const filteredCitites = cities!
+                      .split(",")
+                      .filter((city) => city !== e.city);
+                    if (filteredCitites.length > 0) {
+                      localStorage.setItem("cities", filteredCitites.join(","));
+                    } else {
+                      localStorage.removeItem("cities");
+                    }
                   }
                 }
-              }
-              onClickDelete();
-            }} />
-        </Tooltip>
-      </Flex>
-    </Stack>
-  </>);
+                onClickDelete();
+              }}
+            />
+          </Tooltip>
+        </HStack>
+        <Flex justify={"center"} gap={"8px"} flexWrap={"wrap"}>
+          {e.weather.map((w, idx) => (
+            <WeatherDayCard key={idx} weather={w} date={week[idx]} />
+          ))}
+        </Flex>
+      </Stack>
+    </>
+  );
 };
