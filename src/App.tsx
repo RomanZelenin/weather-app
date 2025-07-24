@@ -79,7 +79,7 @@ function App() {
         {isSuccessQuery && !deleteCurrent &&
           <VStack>
             <WeeklyListWeather
-              e={{ city: currentCity.current, weather: weather }}
+              item={{ city: currentCity.current, weather: weather }}
               isSave={true}
               onClickDelete={() => {
                 setDeleteCurrent(true);
@@ -91,7 +91,7 @@ function App() {
             <WeeklyListWeather
               isSave={false}
               key={`${it.city}`}
-              e={it}
+              item={it}
               onClickDelete={() => setWeatherSavedCities(weatherSavedCities.filter((_it, i) => i !== idx))} />)
         })}
       </Stack>

@@ -6,7 +6,7 @@ import type { Weather } from '../App';
 
 
 
-export const WeeklyListWeather = ({ e, onClickDelete, isSave }: { e: { city: string; weather: Weather[]; }; onClickDelete: () => void; isSave: boolean; }) => {
+export const WeeklyListWeather = ({ item, onClickDelete, isSave }: { item: { city: string; weather: Weather[]; }; onClickDelete: () => void; isSave: boolean; }) => {
   const week = useMemo(() => {
     const currentDate = new Date();
     const week = [currentDate] as Date[];
@@ -20,9 +20,9 @@ export const WeeklyListWeather = ({ e, onClickDelete, isSave }: { e: { city: str
   return (
     <>
       <Stack>
-        <HStack justify={'center'}>
+        <HStack justify={"center"}>
           <Text fontSize={"24px"} alignSelf={"center"}>
-            {e.city}
+            {item.city}
           </Text>
           <Tooltip label={isSave ? "Сохранить" : "Удалить"}>
             <IconButton
@@ -33,17 +33,17 @@ export const WeeklyListWeather = ({ e, onClickDelete, isSave }: { e: { city: str
                 const cities = localStorage.getItem("cities");
                 if (isSave) {
                   if (cities === null) {
-                    localStorage.setItem("cities", e.city);
+                    localStorage.setItem("cities", item.city);
                   } else {
-                    if (!cities.split(",").includes(e.city)) {
-                      localStorage.setItem("cities", cities + "," + e.city);
+                    if (!cities.split(",").includes(item.city)) {
+                      localStorage.setItem("cities", cities + "," + item.city);
                     }
                   }
                 } else {
                   if (cities) {
                     const filteredCitites = cities!
                       .split(",")
-                      .filter((city) => city !== e.city);
+                      .filter((city) => city !== item.city);
                     if (filteredCitites.length > 0) {
                       localStorage.setItem("cities", filteredCitites.join(","));
                     } else {
@@ -57,7 +57,7 @@ export const WeeklyListWeather = ({ e, onClickDelete, isSave }: { e: { city: str
           </Tooltip>
         </HStack>
         <Flex justify={"center"} gap={"8px"} flexWrap={"wrap"}>
-          {e.weather.map((w, idx) => (
+          {item.weather.map((w, idx) => (
             <WeatherDayCard key={idx} weather={w} date={week[idx]} />
           ))}
         </Flex>
