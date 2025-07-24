@@ -35,6 +35,7 @@ export const Search = ({ onClickSearch, isError }: { onClickSearch: (query: stri
   return (<>
     <InputGroup maxW={'400px'}>
       <Input
+        onBlur={() => { setQuery(query.trim()) }}
         ref={refSearchInput}
         borderColor={localError ? 'red' : colorMode==='dark' ? 'whiteAlpha.500' : 'blackAlpha.500'}
         _focus={{
@@ -57,7 +58,7 @@ export const Search = ({ onClickSearch, isError }: { onClickSearch: (query: stri
       disabled={!isSearchActive}
       variant='solid'
       onClick={() => {
-        onClickSearch(query);
+        onClickSearch(query.trim())
         refSearchInput.current?.blur();
         if (toastIdRef.current) {
           toast.close(toastIdRef.current)
