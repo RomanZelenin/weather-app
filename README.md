@@ -2,6 +2,8 @@
 
 A React-based weather forecast application that displays weekly weather data for selected cities using the OpenWeatherMap API.
 
+<img width="2390" height="1170" alt="main screen" src="https://github.com/user-attachments/assets/4b49c149-6335-4e00-b0c5-ca0156e4bef5" />
+
 ## Features
 
 - Search for cities and view their weekly weather forecast
